@@ -12,24 +12,20 @@
         .banner-wrapper {
             position: relative;
             background: #ffffff;
-            /* Eliminamos el borde anterior para usar el nuevo marco */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             line-height: 0;
             transition: all 0.3s ease;
             display: inline-block;
         }
 
-        /* Este es el nuevo borde negro de 1px que no se corta */
+        /* Borde negro 1px anti-recorte */
         .banner-wrapper::after {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border: 1px solid #000000; /* Borde negro sólido */
-            pointer-events: none; /* Permite hacer clic a través del borde */
-            z-index: 30; /* Por encima del banner y del loader */
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid #000000;
+            pointer-events: none;
+            z-index: 30;
         }
 
         .banner-wrapper:hover {
@@ -39,18 +35,13 @@
         .loader-container {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8fafc;
-            z-index: 10;
+            display: flex; align-items: center; justify-content: center;
+            background: #f8fafc; z-index: 10;
         }
         .loader {
             width: 24px; height: 24px;
-            border: 3px solid #e2e8f0;
-            border-bottom-color: #2563eb;
-            border-radius: 50%;
-            display: inline-block;
+            border: 3px solid #e2e8f0; border-bottom-color: #2563eb;
+            border-radius: 50%; display: inline-block;
             animation: rotation 1s linear infinite;
         }
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -59,11 +50,10 @@
             position: absolute;
             top: 8px; right: 8px;
             background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #e2e8f0;
-            border-radius: 50%;
+            border: 1px solid #e2e8f0; border-radius: 50%;
             width: 34px; height: 34px;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; opacity: 0; transition: opacity 0.2s; z-index: 40; /* Subimos el z-index para que esté sobre el borde */
+            cursor: pointer; opacity: 0; transition: opacity 0.2s; z-index: 40;
         }
         .banner-wrapper:hover .reload-btn { opacity: 1; }
         .reload-btn:hover { transform: rotate(180deg); color: #2563eb; }
@@ -84,7 +74,7 @@
     <header class="bg-slate-800 text-white py-2 shadow-md text-center">
         <div class="container mx-auto px-6">
             <h1 class="text-lg font-bold tracking-tight">Pablo Natalizia Portfolio</h1>
-            <p class="text-slate-400 text-[9px] uppercase tracking-[0.2em]">Display Advertising</p>
+            <p class="text-slate-400 text-[9px] uppercase tracking-[0.2em]">Display Advertising Specialist</p>
         </div>
     </header>
 
@@ -92,16 +82,12 @@
         <div id="gallery-container"></div>
     </main>
 
-    <footer class="bg-white border-t border-gray-200 py-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-        <div class="container mx-auto px-6 flex flex-wrap justify-center items-center gap-6 md:gap-12">
-            <span class="flex items-center gap-2 text-slate-600 text-[11px]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                <span class="font-medium lowercase">pablo.natalizia@gmail.com</span>
-            </span>
-            <span class="flex items-center gap-2 text-slate-600 text-[11px]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.29-4.171c1.533.913 3.391 1.396 5.282 1.397 5.587 0 10.133-4.547 10.136-10.138 0-2.706-1.054-5.251-2.97-7.168-1.917-1.917-4.459-2.972-7.163-2.972-5.59 0-10.136 4.547-10.139 10.138-.001 1.961.556 3.878 1.611 5.508l-1.074 3.922 4.023-1.055z"/></svg>
-                <span class="font-medium">+54 9 11 3382 4448</span>
-            </span>
+    <footer class="bg-white border-t border-gray-200 py-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <div class="container mx-auto px-6 flex justify-center items-center">
+            <a href="https://www.upwork.com/freelancers/pablonatalizia" target="_blank" class="flex items-center gap-2 text-slate-700 hover:text-green-600 transition-colors duration-200 group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                <span class="text-sm font-semibold tracking-wide">Contact me via Upwork</span>
+            </a>
         </div>
     </footer>
 
@@ -179,18 +165,13 @@
             const container = document.getElementById('gallery-container');
             container.innerHTML = '';
 
-            const observerOptions = {
-                root: null,
-                rootMargin: '200px',
-                threshold: 0
-            };
+            const observerOptions = { root: null, rootMargin: '200px', threshold: 0 };
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     const iframe = entry.target;
                     const id = iframe.id;
                     const loader = document.getElementById('loader-' + id);
-
                     if (entry.isIntersecting) {
                         if (iframe.src !== iframe.getAttribute('data-src')) {
                             if (loader) loader.style.display = 'flex';
