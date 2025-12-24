@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pablo Natalizia Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        header { position: sticky; top: 0; z-index: 50; }
+        footer { position: sticky; bottom: 0; z-index: 50; }
+
+        .banner-wrapper {
+            position: relative;
+            background: #ffffff;
+            /* Eliminamos el borde anterior para usar el nuevo marco */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            line-height: 0;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        /* Este es el nuevo borde negro de 1px que no se corta */
+        .banner-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid #000000; /* Borde negro sólido */
+            pointer-events: none; /* Permite hacer clic a través del borde */
+            z-index: 30; /* Por encima del banner y del loader */
+        }
+
+        .banner-wrapper:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .loader-container {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            z-index: 10;
+        }
+        .loader {
+            width: 24px; height: 24px;
+            border: 3px solid #e2e8f0;
+            border-bottom-color: #2563eb;
+            border-radius: 50%;
+            display: inline-block;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        .reload-btn {
+            position: absolute;
+            top: 8px; right: 8px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #e2e8f0;
+            border-radius: 50%;
+            width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; opacity: 0; transition: opacity 0.2s; z-index: 40; /* Subimos el z-index para que esté sobre el borde */
+        }
+        .banner-wrapper:hover .reload-btn { opacity: 1; }
+        .reload-btn:hover { transform: rotate(180deg); color: #2563eb; }
+        
+        .category-header {
+            width: 100%; display: flex; align-items: center; justify-content: center; margin: 2.5rem 0 1.5rem 0;
+        }
+        .category-header h2 {
+            font-weight: 700; color: #64748b; text-transform: uppercase;
+            letter-spacing: 0.1em; font-size: 0.75rem; padding: 0 1.5rem; white-space: nowrap;
+        }
+        .category-line { height: 1px; background: #e2e8f0; flex-grow: 1; }
+        main { padding-top: 1rem; padding-bottom: 2rem; }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+    <header class="bg-slate-800 text-white py-2 shadow-md text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-lg font-bold tracking-tight">Pablo Natalizia Portfolio</h1>
+            <p class="text-slate-400 text-[9px] uppercase tracking-[0.2em]">Display Advertising</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 flex-grow">
+        <div id="gallery-container"></div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 py-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <div class="container mx-auto px-6 flex flex-wrap justify-center items-center gap-6 md:gap-12">
+            <span class="flex items-center gap-2 text-slate-600 text-[11px]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                <span class="font-medium lowercase">pablo.natalizia@gmail.com</span>
+            </span>
+            <span class="flex items-center gap-2 text-slate-600 text-[11px]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.29-4.171c1.533.913 3.391 1.396 5.282 1.397 5.587 0 10.133-4.547 10.136-10.138 0-2.706-1.054-5.251-2.97-7.168-1.917-1.917-4.459-2.972-7.163-2.972-5.59 0-10.136 4.547-10.139 10.138-.001 1.961.556 3.878 1.611 5.508l-1.074 3.922 4.023-1.055z"/></svg>
+                <span class="font-medium">+54 9 11 3382 4448</span>
+            </span>
+        </div>
+    </footer>
+
+    <script>
+        const bannerGroups = [
+            { 
+                nombre: "Medium Rectangles (300x250)", 
+                banners: [
+                    { ruta: "banners/300x250-01/index.html", ancho: 300, alto: 250 },
+                    { ruta: "banners/300x250-02/index.html", ancho: 300, alto: 250 },
+                    { ruta: "banners/300x250-03/index.html", ancho: 300, alto: 250 },
+                    { ruta: "banners/300x250-04/index.html", ancho: 300, alto: 250 },
+                    { ruta: "banners/300x250-05/index.html", ancho: 300, alto: 250 },
+                    { ruta: "banners/300x250-06/index.html", ancho: 300, alto: 250 },
+                    { ruta: "banners/300x250-07/index.html", ancho: 300, alto: 250 },
+                    { ruta: "banners/300x250-08/index.html", ancho: 300, alto: 250 }
+                ] 
+            },
+            { 
+                nombre: "Leaderboards (728x90)", 
+                banners: [
+                    { ruta: "banners/728x90-01/index.html", ancho: 728, alto: 90 },
+                    { ruta: "banners/728x90-02/index.html", ancho: 728, alto: 90 },
+                    { ruta: "banners/728x90-03/index.html", ancho: 728, alto: 90 },
+                    { ruta: "banners/728x90-04/index.html", ancho: 728, alto: 90 },
+                    { ruta: "banners/728x90-05/index.html", ancho: 728, alto: 90 },
+                    { ruta: "banners/728x90-06/index.html", ancho: 728, alto: 90 }
+                ] 
+            },
+            { 
+                nombre: "Half Page (300x600)", 
+                banners: [
+                    { ruta: "banners/300x600-01/index.html", ancho: 300, alto: 600 },
+                    { ruta: "banners/300x600-02/index.html", ancho: 300, alto: 600 },
+                    { ruta: "banners/300x600-03/index.html", ancho: 300, alto: 600 },
+                    { ruta: "banners/300x600-04/index.html", ancho: 300, alto: 600 }
+                ] 
+            },
+            { 
+                nombre: "Wide Skyscrapers (160x600)", 
+                banners: [
+                    { ruta: "banners/160x600-01/index.html", ancho: 160, alto: 600 },
+                    { ruta: "banners/160x600-02/index.html", ancho: 160, alto: 600 },
+                    { ruta: "banners/160x600-03/index.html", ancho: 160, alto: 600 },
+                    { ruta: "banners/160x600-04/index.html", ancho: 160, alto: 600 }
+                ] 
+            },
+            { 
+                nombre: "Mobile Banners (320x50)", 
+                banners: [
+                    { ruta: "banners/320x50-01/index.html", ancho: 320, alto: 50 },
+                    { ruta: "banners/320x50-02/index.html", ancho: 320, alto: 50 },
+                    { ruta: "banners/320x50-03/index.html", ancho: 320, alto: 50 }
+                ] 
+            }
+        ];
+
+        function hideLoader(id) {
+            const loader = document.getElementById('loader-' + id);
+            if (loader) loader.style.display = 'none';
+        }
+
+        function reloadBanner(id) {
+            const iframe = document.getElementById(id);
+            const loader = document.getElementById('loader-' + id);
+            if (iframe) {
+                if (loader) loader.style.display = 'flex';
+                const currentSrc = iframe.getAttribute('data-src');
+                iframe.src = '';
+                iframe.src = currentSrc;
+            }
+        }
+
+        function renderGallery() {
+            const container = document.getElementById('gallery-container');
+            container.innerHTML = '';
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '200px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const iframe = entry.target;
+                    const id = iframe.id;
+                    const loader = document.getElementById('loader-' + id);
+
+                    if (entry.isIntersecting) {
+                        if (iframe.src !== iframe.getAttribute('data-src')) {
+                            if (loader) loader.style.display = 'flex';
+                            iframe.src = iframe.getAttribute('data-src');
+                        }
+                    } else {
+                        iframe.src = '';
+                        if (loader) loader.style.display = 'none';
+                    }
+                });
+            }, observerOptions);
+
+            bannerGroups.forEach((group, groupIndex) => {
+                const section = document.createElement('section');
+                section.className = "flex flex-col items-center w-full";
+                section.innerHTML = `
+                    <div class="category-header">
+                        <div class="category-line"></div>
+                        <h2>${group.nombre}</h2>
+                        <div class="category-line"></div>
+                    </div>
+                    <div id="group-${groupIndex}" class="flex flex-wrap gap-10 justify-center items-start w-full"></div>
+                `;
+                container.appendChild(section);
+                
+                const groupGrid = document.getElementById(`group-${groupIndex}`);
+                group.banners.forEach((banner, bannerIndex) => {
+                    const id = `iframe-${groupIndex}-${bannerIndex}`;
+                    const wrapper = document.createElement('div');
+                    wrapper.className = "banner-wrapper overflow-hidden";
+                    wrapper.style.width = banner.ancho + 'px';
+                    wrapper.style.height = banner.alto + 'px';
+
+                    wrapper.innerHTML = `
+                        <div id="loader-${id}" class="loader-container"><span class="loader"></span></div>
+                        <button class="reload-btn" onclick="reloadBanner('${id}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                        </button>
+                        <iframe 
+                            id="${id}" 
+                            data-src="${banner.ruta}" 
+                            src=""
+                            width="${banner.ancho}" 
+                            height="${banner.alto}" 
+                            frameborder="0" 
+                            scrolling="no" 
+                            onload="hideLoader('${id}')"
+                            sandbox="allow-scripts allow-forms allow-same-origin">
+                        </iframe>
+                    `;
+                    groupGrid.appendChild(wrapper);
+                    observer.observe(wrapper.querySelector('iframe'));
+                });
+            });
+        }
+        document.addEventListener('DOMContentLoaded', renderGallery);
+    </script>
+</body>
+</html>
