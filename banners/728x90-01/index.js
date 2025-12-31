@@ -291,6 +291,29 @@ if (reversed == null) { reversed = false; }
 }).prototype = getMCSymbolPrototype(lib.Símbolo10, new cjs.Rectangle(-485,-150,970,300), null);
 
 
+(lib.Símbolo9copia = function(mode,startPosition,loop,reversed) {
+if (loop == null) { loop = true; }
+if (reversed == null) { reversed = false; }
+	var props = new Object();
+	props.mode = mode;
+	props.startPosition = startPosition;
+	props.labels = {};
+	props.loop = loop;
+	props.reversed = reversed;
+	cjs.MovieClip.apply(this,[props]);
+
+	// Capa_1
+	this.shape = new cjs.Shape();
+	this.shape.graphics.lf(["#FFFFFF","rgba(255,255,255,0.8)","rgba(255,255,255,0)"],[0.549,0.769,1],-327.7,0.5,557.7,0.5).s().p("EhXJAWHMAAAgsXMCuSAAKMAAAAsXg");
+	this.shape.setTransform(-347.2,-0.475);
+
+	this.timeline.addTween(cjs.Tween.get(this.shape).wait(1));
+
+	this._renderFirstFrame();
+
+}).prototype = getMCSymbolPrototype(lib.Símbolo9copia, new cjs.Rectangle(-904.9,-142.9,1115.5,284.9), null);
+
+
 (lib.Símbolo9 = function(mode,startPosition,loop,reversed) {
 if (loop == null) { loop = true; }
 if (reversed == null) { reversed = false; }
@@ -1627,14 +1650,14 @@ if (reversed == null) { reversed = false; }
 	this.timeline.addTween(cjs.Tween.get(this.instance_7).to({_off:true},494).wait(406));
 
 	// degrade-right
-	this.instance_8 = new lib.Símbolo9();
-	this.instance_8.setTransform(472.2,48,0.6188,0.7505,0,0,180,211,0);
+	this.instance_8 = new lib.Símbolo9copia();
+	this.instance_8.setTransform(412.2,48,0.6188,0.7505,0,0,180,211,0);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_8).wait(900));
 
 	// degrade-left
 	this.instance_9 = new lib.Símbolo9();
-	this.instance_9.setTransform(356.8,50.25,0.6706,0.7505,0,0,0,212.2,3);
+	this.instance_9.setTransform(386.8,50.25,0.6706,0.7505,0,0,0,212.2,3);
 
 	this.timeline.addTween(cjs.Tween.get(this.instance_9).wait(900));
 
@@ -1648,7 +1671,7 @@ if (reversed == null) { reversed = false; }
 	this._renderFirstFrame();
 
 }).prototype = p = new lib.AnMovieClip();
-p.nominalBounds = new cjs.Rectangle(-28.4,-26.9,1191.2,212.20000000000002);
+p.nominalBounds = new cjs.Rectangle(1.6,-26.9,1101.2,212.20000000000002);
 // library properties:
 lib.properties = {
 	id: 'A4DAFDFBAF18B64E9CD2D6DEB02E1B51',
@@ -1658,9 +1681,9 @@ lib.properties = {
 	color: "#FFFFFF",
 	opacity: 1.00,
 	manifest: [
-		{src:"blue.jpg?1767219953539", id:"blue"},
-		{src:"couple.png?1767219953539", id:"couple"},
-		{src:"img01.jpg?1767219953539", id:"img01"}
+		{src:"blue.jpg?1767220497334", id:"blue"},
+		{src:"couple.png?1767220497334", id:"couple"},
+		{src:"img01.jpg?1767220497334", id:"img01"}
 	],
 	preloads: []
 };
