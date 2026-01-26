@@ -1,79 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pablo Natalizia Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        html { scroll-behavior: smooth; }
-        body { margin: 0; padding: 0; background-color: #f8fafc; overflow-x: hidden; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pablo Natalizia Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        header { position: sticky; top: 0; z-index: 100; }
+  <style>
+    html { scroll-behavior: smooth; }
+    body { margin: 0; padding: 0; background-color: #f8fafc; overflow-x: hidden; }
 
-        /* Footer con sello de seguridad */
-        footer {
-            position: sticky;
-            bottom: 0;
-            z-index: 100;
-            background-color: white;
-            border-top: 1px solid #e2e8f0;
-            box-shadow: 0 -8px 15px rgba(0,0,0,0.05), 0 20px 0 20px white;
-        }
+    header { position: sticky; top: 0; z-index: 100; }
 
-        main { padding-top: 1rem; padding-bottom: 2rem; min-height: 100vh; }
+    footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 100;
+      background-color: white;
+      border-top: 1px solid #e2e8f0;
+      box-shadow: 0 -8px 15px rgba(0,0,0,0.05), 0 20px 0 20px white;
+    }
 
-        /* --- ESTILOS DE BANNERS --- */
-        .banner-wrapper {
-            position: relative;
-            background: #ffffff;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            line-height: 0;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
+    main {
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+      min-height: 100vh;
+    }
 
-        .banner-wrapper::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border: 1px solid #000000;
-            pointer-events: none;
-            z-index: 30;
-        }
+    /* --- BANNERS --- */
+    .banner-wrapper {
+      position: relative;
+      background: #ffffff;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      line-height: 0;
+      display: inline-block;
+    }
 
-        /* --- RESPONSIVE MÓVIL --- */
-        @media (max-width: 768px) {
-            .banner-wrapper { display: block !important; margin: 0 auto !important; max-width: 100% !important; overflow: hidden; }
-            .banner-wrapper[style*="width: 728px"] { width: 310px !important; height: 38px !important; margin: 10px auto; }
-            .banner-wrapper[style*="width: 728px"] iframe { transform: scale(0.425); transform-origin: top left; width: 728px !important; height: 90px !important; }
-            .banner-wrapper[style*="width: 300px"], .banner-wrapper[style*="width: 320px"] { transform: scale(0.92); transform-origin: center center; }
-        }
+    .banner-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid #000;
+      pointer-events: none;
+      z-index: 30;
+    }
 
-        .loader-container { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; background: #f8fafc; z-index: 10; }
-        .loader { width: 20px; height: 20px; border: 2px solid #e2e8f0; border-bottom-color: #2563eb; border-radius: 50%; animation: rotation 1s linear infinite; }
-        @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    /* --- RELOAD BUTTON --- */
+    .reload-btn {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(37,99,235,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transform: scale(0.85);
+      transition:
+        opacity 0.2s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+      z-index: 40;
+      backdrop-filter: blur(6px);
+    }
 
-        .reload-btn { position: absolute; top: 5px; right: 5px; background: rgba(255, 255, 255, 0.9); border: 1px solid #e2e8f0; border-radius: 50%; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: opacity 0.2s; z-index: 40; }
-        .banner-wrapper:hover .reload-btn { opacity: 1; }
+    .banner-wrapper:hover .reload-btn {
+      opacity: 1;
+      transform: scale(1);
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 8px 20px rgba(37,99,235,0.25);
+    }
 
-        .category-header { width: 100%; display: flex; align-items: center; justify-content: center; margin: 2rem 0 1.5rem 0; }
-        .category-header h2 { font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7rem; padding: 0 1rem; white-space: nowrap; }
-        .category-line { height: 1px; background: #e2e8f0; flex-grow: 1; }
-    </style>
+    .reload-btn svg {
+      transition: transform 0.3s ease;
+    }
+
+    .reload-btn:hover svg {
+      transform: rotate(90deg);
+    }
+
+    /* --- LOADER --- */
+    .loader-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      z-index: 10;
+    }
+
+    .loader {
+      width: 20px;
+      height: 20px;
+      border: 2px solid #e2e8f0;
+      border-bottom-color: #2563eb;
+      border-radius: 50%;
+      animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+      to { transform: rotate(360deg); }
+    }
+
+    /* --- CATEGORIES --- */
+    .category-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2rem 0 1.5rem;
+    }
+
+    .category-header h2 {
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-size: 0.7rem;
+      padding: 0 1rem;
+      white-space: nowrap;
+    }
+
+    .category-line {
+      height: 1px;
+      background: #e2e8f0;
+      flex-grow: 1;
+    }
+
+    /* --- MOBILE --- */
+    @media (max-width: 768px) {
+      .banner-wrapper { margin: 0 auto; }
+      .banner-wrapper[style*="width: 728px"] {
+        width: 310px !important;
+        height: 38px !important;
+      }
+      .banner-wrapper[style*="width: 728px"] iframe {
+        transform: scale(0.425);
+        transform-origin: top left;
+      }
+    }
+  </style>
 </head>
+
 <body class="bg-gray-50">
 
-    <header class="bg-slate-800 text-white py-2.5 shadow-md text-center">
-        <div class="container mx-auto px-6">
-            <h1 class="text-base font-bold tracking-tight">Pablo Natalizia Portfolio</h1>
-            <p class="text-slate-400 text-[8px] uppercase tracking-[0.2em]">HTML5 Banner Development</p>
-        </div>
-    </header>
+<header class="bg-slate-800 text-white py-2.5 shadow-md text-center">
+  <div class="container mx-auto px-6">
+    <h1 class="text-base font-bold tracking-tight">
+      Pablo Natalizia | Portfolio
+    </h1>
+    <p class="text-slate-400 text-[8px] uppercase tracking-[0.2em]">
+      HTML5 Display Ads Developer
+    </p>
+  </div>
+</header>
 
-    <main class="container mx-auto px-4">
-        <div id="gallery-container"></div>
-    </main>
+<main class="container mx-auto px-4">
+  <div id="gallery-container"></div>
+</main>
 
     <footer class="py-3 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
         <div class="container mx-auto px-6 flex justify-center items-center">
@@ -84,78 +175,117 @@
         </div>
     </footer>
 
-    <script>
-        const bannerGroups = [
-            { nombre: "Medium Rectangles (300x250)", banners: Array.from({length: 8}, (_, i) => ({ ruta: `banners/300x250-0${i+1}/index.html`, ancho: 300, alto: 250 })) },
-            { nombre: "Leaderboards (728x90)", banners: Array.from({length: 6}, (_, i) => ({ ruta: `banners/728x90-0${i+1}/index.html`, ancho: 728, alto: 90 })) },
-            { nombre: "Half Page (300x600)", banners: Array.from({length: 4}, (_, i) => ({ ruta: `banners/300x600-0${i+1}/index.html`, ancho: 300, alto: 600 })) },
-            { nombre: "Wide Skyscrapers (160x600)", banners: Array.from({length: 4}, (_, i) => ({ ruta: `banners/160x600-0${i+1}/index.html`, ancho: 160, alto: 600 })) },
-            { nombre: "Mobile Banners (320x50)", banners: Array.from({length: 3}, (_, i) => ({ ruta: `banners/320x50-0${i+1}/index.html`, ancho: 320, alto: 50 })) }
-        ];
+<script>
+  const bannerGroups = [
+    { nombre: "Medium Rectangles (300x250)", banners: Array.from({length: 8}, (_, i) => ({ ruta: `banners/300x250-0${i+1}/index.html`, ancho: 300, alto: 250 })) },
+    { nombre: "Leaderboards (728x90)", banners: Array.from({length: 6}, (_, i) => ({ ruta: `banners/728x90-0${i+1}/index.html`, ancho: 728, alto: 90 })) },
+    { nombre: "Half Page (300x600)", banners: Array.from({length: 4}, (_, i) => ({ ruta: `banners/300x600-0${i+1}/index.html`, ancho: 300, alto: 600 })) },
+    { nombre: "Wide Skyscrapers (160x600)", banners: Array.from({length: 4}, (_, i) => ({ ruta: `banners/160x600-0${i+1}/index.html`, ancho: 160, alto: 600 })) },
+    { nombre: "Mobile Banners (320x50)", banners: Array.from({length: 3}, (_, i) => ({ ruta: `banners/320x50-0${i+1}/index.html`, ancho: 320, alto: 50 })) }
+  ];
 
-        function hideLoader(id) { const loader = document.getElementById('loader-' + id); if (loader) loader.style.display = 'none'; }
+  function hideLoader(id) {
+    const loader = document.getElementById("loader-" + id);
+    if (loader) loader.style.display = "none";
+  }
 
-        function reloadBanner(id) {
-            const iframe = document.getElementById(id);
-            const loader = document.getElementById('loader-' + id);
-            if (iframe) {
-                if (loader) loader.style.display = 'flex';
-                const currentSrc = iframe.getAttribute('data-src');
-                iframe.src = '';
-                iframe.src = currentSrc;
-            }
-        }
+  function disableBannerClicks(iframe) {
+    try {
+      const win = iframe.contentWindow;
+      win.open = () => null;
 
-        function renderGallery() {
-            const container = document.getElementById('gallery-container');
-            container.innerHTML = '';
-            const observerOptions = { root: null, rootMargin: '400px', threshold: 0 };
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    const iframe = entry.target;
-                    const id = iframe.id;
-                    const loader = document.getElementById('loader-' + id);
-                    if (entry.isIntersecting) {
-                        if (iframe.src !== iframe.getAttribute('data-src')) {
-                            if (loader) loader.style.display = 'flex';
-                            iframe.src = iframe.getAttribute('data-src');
-                        }
-                    } else { iframe.src = ''; }
-                });
-            }, observerOptions);
+      Object.defineProperty(win.location, "href", {
+        set: () => {}
+      });
 
-            bannerGroups.forEach((group, groupIndex) => {
-                const section = document.createElement('section');
-                section.className = "flex flex-col items-center w-full";
-                section.innerHTML = `
-                    <div class="category-header">
-                        <div class="category-line"></div>
-                        <h2>${group.nombre}</h2>
-                        <div class="category-line"></div>
-                    </div>
-                    <div id="group-${groupIndex}" class="flex flex-wrap gap-10 justify-center items-start w-full"></div>
-                `;
-                container.appendChild(section);
-                const groupGrid = document.getElementById(`group-${groupIndex}`);
-                group.banners.forEach((banner, bannerIndex) => {
-                    const id = `iframe-${groupIndex}-${bannerIndex}`;
-                    const wrapper = document.createElement('div');
-                    wrapper.className = "banner-wrapper mx-auto";
-                    wrapper.style.width = banner.ancho + 'px';
-                    wrapper.style.height = banner.alto + 'px';
-                    wrapper.innerHTML = `
-                        <div id="loader-${id}" class="loader-container"><span class="loader"></span></div>
-                        <button class="reload-btn" title="Reload Banner" onclick="reloadBanner('${id}')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-                        </button>
-                        <iframe id="${id}" data-src="${banner.ruta}" src="" width="${banner.ancho}" height="${banner.alto}" frameborder="0" scrolling="no" onload="hideLoader('${id}')" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
-                    `;
-                    groupGrid.appendChild(wrapper);
-                    observer.observe(wrapper.querySelector('iframe'));
-                });
-            });
-        }
-        document.addEventListener('DOMContentLoaded', renderGallery);
-    </script>
+      iframe.contentDocument.addEventListener(
+        "click",
+        e => {
+          e.preventDefault();
+          e.stopPropagation();
+        },
+        true
+      );
+    } catch (e) {
+      console.warn("Click blocking failed", e);
+    }
+  }
+
+  function reloadBanner(id) {
+    const iframe = document.getElementById(id);
+    const loader = document.getElementById("loader-" + id);
+    if (!iframe) return;
+
+    loader.style.display = "flex";
+    iframe.src = "";
+    iframe.src = iframe.dataset.src;
+  }
+
+  function renderGallery() {
+    const container = document.getElementById("gallery-container");
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          const iframe = entry.target;
+          iframe.src = entry.isIntersecting ? iframe.dataset.src : "";
+        });
+      },
+      { rootMargin: "400px" }
+    );
+
+    bannerGroups.forEach((group, gi) => {
+      const section = document.createElement("section");
+      section.innerHTML = `
+        <div class="category-header">
+          <div class="category-line"></div>
+          <h2>${group.nombre}</h2>
+          <div class="category-line"></div>
+        </div>
+        <div id="group-${gi}" class="flex flex-wrap gap-10 justify-center"></div>
+      `;
+      container.appendChild(section);
+
+      const grid = section.querySelector(`#group-${gi}`);
+
+      group.banners.forEach((banner, bi) => {
+        const id = `iframe-${gi}-${bi}`;
+        const wrapper = document.createElement("div");
+        wrapper.className = "banner-wrapper";
+        wrapper.style.width = banner.ancho + "px";
+        wrapper.style.height = banner.alto + "px";
+
+        wrapper.innerHTML = `
+          <div id="loader-${id}" class="loader-container">
+            <span class="loader"></span>
+          </div>
+          <button class="reload-btn" onclick="reloadBanner('${id}')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M23 4v6h-6"></path>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </button>
+          <iframe
+            id="${id}"
+            data-src="${banner.ruta}"
+            width="${banner.ancho}"
+            height="${banner.alto}"
+            frameborder="0"
+            scrolling="no"
+            sandbox="allow-scripts allow-same-origin"
+            onload="hideLoader('${id}'); disableBannerClicks(this);">
+          </iframe>
+        `;
+
+        grid.appendChild(wrapper);
+        observer.observe(wrapper.querySelector("iframe"));
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", renderGallery);
+</script>
+
 </body>
 </html>
