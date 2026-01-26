@@ -81,6 +81,7 @@
       transition: transform 0.3s ease;
     }
 
+    /* 👉 giro en sentido horario */
     .reload-btn:hover svg {
       transform: rotate(90deg);
     }
@@ -134,22 +135,16 @@
       flex-grow: 1;
     }
 
-    /* --- SPECIAL ALIGNMENT --- */
-    .group-align-wide {
-      max-width: 1320px;
-      margin: 0 auto;
-      justify-content: space-between !important;
-    }
-
-    .group-align-wide.gap-loose {
-      gap: 4rem;
-    }
-
     /* --- MOBILE --- */
     @media (max-width: 768px) {
       .banner-wrapper { margin: 0 auto; }
-      .group-align-wide {
-        justify-content: center !important;
+      .banner-wrapper[style*="width: 728px"] {
+        width: 310px !important;
+        height: 38px !important;
+      }
+      .banner-wrapper[style*="width: 728px"] iframe {
+        transform: scale(0.425);
+        transform-origin: top left;
       }
     }
   </style>
@@ -172,23 +167,14 @@
   <div id="gallery-container"></div>
 </main>
 
-<footer class="py-3 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
-  <div class="container mx-auto px-6 flex justify-center items-center">
-    <a href="https://www.upwork.com/freelancers/pablonatalizia"
-       target="_blank"
-       class="flex items-center gap-2 text-slate-700 hover:text-green-600 transition-colors duration-200">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
-           viewBox="0 0 24 24" fill="none" stroke="currentColor"
-           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-      </svg>
-      <span class="text-xs font-semibold tracking-wide">
-        Contact me via Upwork
-      </span>
-    </a>
-  </div>
-</footer>
+    <footer class="py-3 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
+        <div class="container mx-auto px-6 flex justify-center items-center">
+            <a href="https://www.upwork.com/freelancers/pablonatalizia" target="_blank" class="flex items-center gap-2 text-slate-700 hover:text-green-600 transition-colors duration-200 group">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                <span class="text-xs font-semibold tracking-wide">Contact me via Upwork</span>
+            </a>
+        </div>
+    </footer>
 
 <script>
   const bannerGroups = [
@@ -208,11 +194,19 @@
     try {
       const win = iframe.contentWindow;
       win.open = () => null;
-      Object.defineProperty(win.location, "href", { set: () => {} });
-      iframe.contentDocument.addEventListener("click", e => {
-        e.preventDefault();
-        e.stopPropagation();
-      }, true);
+
+      Object.defineProperty(win.location, "href", {
+        set: () => {}
+      });
+
+      iframe.contentDocument.addEventListener(
+        "click",
+        e => {
+          e.preventDefault();
+          e.stopPropagation();
+        },
+        true
+      );
     } catch (e) {
       console.warn("Click blocking failed", e);
     }
@@ -222,6 +216,7 @@
     const iframe = document.getElementById(id);
     const loader = document.getElementById("loader-" + id);
     if (!iframe) return;
+
     loader.style.display = "flex";
     iframe.src = "";
     iframe.src = iframe.dataset.src;
@@ -252,13 +247,6 @@
       container.appendChild(section);
 
       const grid = section.querySelector(`#group-${gi}`);
-
-      if (
-        group.nombre.includes("160x600") ||
-        group.nombre.includes("320x50")
-      ) {
-        grid.classList.add("group-align-wide", "gap-loose");
-      }
 
       group.banners.forEach((banner, bi) => {
         const id = `iframe-${gi}-${bi}`;
