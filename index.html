@@ -98,6 +98,13 @@
       z-index: 40;
       backdrop-filter: blur(6px);
     }
+      
+      /* Añade esto a tu <style> */
+iframe {
+  position: relative;
+  z-index: 5; /* Menor que el z-index: 10 del loader */
+  background-color: transparent;
+}
 
     .banner-wrapper:hover .reload-btn {
       opacity: 1;
@@ -221,10 +228,15 @@
     { nombre: "Mobile Banners (320x50)", banners: Array.from({length: 3}, (_, i) => ({ ruta: `banners/320x50-0${i+1}/index.html`, ancho: 320, alto: 50 })) }
   ];
 
-  function hideLoader(id) {
-    const loader = document.getElementById("loader-" + id);
-    if (loader) loader.style.display = "none";
+function hideLoader(id) {
+  const iframe = document.getElementById(id);
+  const loader = document.getElementById("loader-" + id);
+  
+  // Solo ocultamos si el iframe ya tiene una URL real cargada
+  if (iframe && iframe.src && iframe.src !== "about:blank" && loader) {
+    loader.style.display = "none";
   }
+}
 
   function disableBannerClicks(iframe) {
     try {
