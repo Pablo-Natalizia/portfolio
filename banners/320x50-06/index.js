@@ -2,9 +2,7 @@
 
 var p; // shortcut to reference prototypes
 var lib={};var ss={};var img={};
-lib.ssMetadata = [
-		{name:"index_atlas_P_1", frames: [[263,0,109,100],[263,102,80,80],[0,202,299,84],[0,0,261,200]]}
-];
+lib.ssMetadata = [];
 
 
 (lib.AnMovieClip = function(){
@@ -28,31 +26,27 @@ lib.ssMetadata = [
 
 
 (lib.botella = function() {
-	this.initialize(ss["index_atlas_P_1"]);
-	this.gotoAndStop(0);
-}).prototype = p = new cjs.Sprite();
-
+	this.initialize(img.botella);
+}).prototype = p = new cjs.Bitmap();
+p.nominalBounds = new cjs.Rectangle(0,0,109,100);
 
 
 (lib.botella02 = function() {
-	this.initialize(ss["index_atlas_P_1"]);
-	this.gotoAndStop(1);
-}).prototype = p = new cjs.Sprite();
-
+	this.initialize(img.botella02);
+}).prototype = p = new cjs.Bitmap();
+p.nominalBounds = new cjs.Rectangle(0,0,80,80);
 
 
 (lib.magristraltxt = function() {
-	this.initialize(ss["index_atlas_P_1"]);
-	this.gotoAndStop(2);
-}).prototype = p = new cjs.Sprite();
-
+	this.initialize(img.magristraltxt);
+}).prototype = p = new cjs.Bitmap();
+p.nominalBounds = new cjs.Rectangle(0,0,299,84);
 
 
 (lib.rayo = function() {
-	this.initialize(ss["index_atlas_P_1"]);
-	this.gotoAndStop(3);
-}).prototype = p = new cjs.Sprite();
-// helper functions:
+	this.initialize(img.rayo);
+}).prototype = p = new cjs.Bitmap();
+p.nominalBounds = new cjs.Rectangle(0,0,261,200);// helper functions:
 
 function mc_symbol_clone() {
 	var clone = this._cloneProps(new this.constructor(this.mode, this.startPosition, this.loop, this.reversed));
@@ -1065,7 +1059,10 @@ lib.properties = {
 	color: "#FFFFFF",
 	opacity: 1.00,
 	manifest: [
-		{src:"images/index_atlas_P_1.png?1728424151121", id:"index_atlas_P_1"}
+		{src:"images/botella.png?1772959379692", id:"botella"},
+		{src:"images/botella02.png?1772959379692", id:"botella02"},
+		{src:"images/magristraltxt.png?1772959379692", id:"magristraltxt"},
+		{src:"images/rayo.png?1772959379692", id:"rayo"}
 	],
 	preloads: []
 };
