@@ -183,6 +183,14 @@ iframe {
         transform-origin: top left;
       }
     }
+      
+      .banner-wrapper, 
+.banner-wrapper iframe {
+  cursor: default !important;
+}
+      
+
+      
   </style>
 </head>
 
@@ -241,6 +249,32 @@ function hideLoader(id) {
     iframe.style.opacity = "1";
   }
 }
+    
+    function reloadBanner(id) {
+  const iframe = document.getElementById(id);
+  const loader = document.getElementById("loader-" + id);
+
+  if (iframe) {
+    // 1. Mostramos el loader de nuevo
+    if (loader) {
+      loader.style.display = "flex";
+      loader.style.opacity = "1";
+    }
+    
+    // 2. Ocultamos el iframe momentáneamente para el efecto visual
+    iframe.style.opacity = "0";
+
+    // 3. Forzamos la recarga del contenido
+    const currentSrc = iframe.dataset.src;
+    iframe.src = "about:blank"; // Limpiamos primero
+    
+    setTimeout(() => {
+      iframe.src = currentSrc; // Volvemos a cargar la ruta real
+    }, 50);
+  }
+}
+    
+
 
 function renderGallery() {
   const container = document.getElementById("gallery-container");
@@ -335,7 +369,12 @@ const observer = new IntersectionObserver(
 }
 
   document.addEventListener("DOMContentLoaded", renderGallery);
+    
+    
+    
 </script>
+    
+    
 
 </body>
 </html>
