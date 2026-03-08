@@ -203,16 +203,46 @@ iframe {
   Freelance developer available on Upwork and Fiverr.
 </section>
 
-<header class="bg-slate-800 text-white py-2.5 shadow-md text-center">
-  <div class="container mx-auto px-6">
-    <h1 class="text-base font-bold tracking-tight">
-      Pablo Natalizia | Portfolio
-    </h1>
-    <p class="text-slate-400 text-[8px] uppercase tracking-[0.2em]">
-      HTML5 Display Ads Developer
-    </p>
+<header class="bg-slate-800 text-white py-2.5 shadow-md sticky top-0 z-[100]">
+  <div class="container mx-auto px-4 md:px-6 grid grid-cols-[1fr_auto_1fr] items-center">
+    
+    <div class="invisible lg:block"></div>
+
+    <div class="text-center min-w-0">
+      <h1 class="text-sm md:text-base font-bold tracking-tight whitespace-nowrap overflow-hidden text-ellipsis">
+        Pablo Natalizia | Portfolio
+      </h1>
+      <p class="text-slate-400 text-[7px] md:text-[8px] uppercase tracking-[0.2em] whitespace-nowrap">
+        HTML5 Display Ads Developer
+      </p>
+    </div>
+
+    <div class="flex justify-end">
+      <button id="menu-btn" class="block focus:outline-none z-[110]" aria-label="Abrir menú">
+        <div class="w-6 h-5 relative flex flex-col justify-between overflow-hidden">
+          <span id="line1" class="w-full h-0.5 bg-white transition-all duration-300 origin-left"></span>
+          <span id="line2" class="w-full h-0.5 bg-white transition-all duration-300"></span>
+          <span id="line3" class="w-full h-0.5 bg-white transition-all duration-300 origin-left"></span>
+        </div>
+      </button>
+    </div>
   </div>
+
+  <nav id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-slate-800/90 backdrop-blur-sm border-t border-slate-700 shadow-xl">
+    <ul class="flex flex-col p-4 space-y-3 text-center text-sm font-medium tracking-wide">
+      <li><a href="#" class="menu-link block py-2 hover:text-blue-400 transition-colors" data-target="group-0">300x250</a></li>
+      <li><a href="#" class="menu-link block py-2 hover:text-blue-400 transition-colors" data-target="group-1">728x90</a></li>
+      <li><a href="#" class="menu-link block py-2 hover:text-blue-400 transition-colors" data-target="group-2">300x600</a></li>
+      <li><a href="#" class="menu-link block py-2 hover:text-blue-400 transition-colors" data-target="group-3">160x600</a></li>
+      <li><a href="#" class="menu-link block py-2 hover:text-blue-400 transition-colors" data-target="group-4">320x50</a></li>
+    </ul>
+  </nav>
 </header>
+
+
+
+
+
 
 <main class="container mx-auto px-4">
   <div id="gallery-container"></div>
@@ -319,7 +349,9 @@ const observer = new IntersectionObserver(
 
   bannerGroups.forEach((group, gi) => {
     // ... (Tu creación de secciones permanece igual)
-    const section = document.createElement("section");
+const section = document.createElement("section");
+    // Añadimos ID a la sección para el scroll
+    section.id = `section-group-${gi}`; 
     section.innerHTML = `
       <div class="category-header">
         <div class="category-line"></div>
@@ -370,7 +402,62 @@ const observer = new IntersectionObserver(
 
   document.addEventListener("DOMContentLoaded", renderGallery);
     
-    
+// --- Lógica del Menú Hamburguesa ---
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const line1 = document.getElementById('line1');
+const line2 = document.getElementById('line2');
+const line3 = document.getElementById('line3');
+
+// Función única para cerrar el menú
+function closeMenu() {
+  if (!mobileMenu.classList.contains('hidden')) {
+    mobileMenu.classList.add('hidden');
+    // Revertir animación de la hamburguesa
+    line1.classList.remove('rotate-45', 'translate-x-1');
+    line2.classList.remove('-translate-x-10', 'opacity-0');
+    line3.classList.remove('-rotate-45', 'translate-x-1');
+  }
+}
+
+// Toggle al hacer click en el botón
+menuBtn.addEventListener('click', () => {
+  const isHidden = mobileMenu.classList.toggle('hidden');
+  
+  // Animación de la hamburguesa a "X"
+  line1.classList.toggle('rotate-45', !isHidden);
+  line1.classList.toggle('translate-x-1', !isHidden);
+  line2.classList.toggle('-translate-x-10', !isHidden);
+  line2.classList.toggle('opacity-0', !isHidden);
+  line3.classList.toggle('-rotate-45', !isHidden);
+  line3.classList.toggle('translate-x-1', !isHidden);
+});
+
+// NUEVO: Cerrar menú al detectar scroll
+window.addEventListener('scroll', () => {
+  closeMenu();
+}, { passive: true }); // Mejora el rendimiento del scroll
+
+// Scroll suave y cerrar menú al clickear link
+document.querySelectorAll('.menu-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = link.getAttribute('data-target');
+    const targetSection = document.getElementById(`section-${targetId}`);
+
+    if (targetSection) {
+      const headerOffset = 60;
+      const elementPosition = targetSection.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+    closeMenu();
+  });
+});
     
 </script>
     
