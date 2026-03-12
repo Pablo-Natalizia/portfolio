@@ -30,7 +30,7 @@
   }
     #_preload_div_ {
         box-sizing: border-box;
-        border: 1px solid #CCCCCC;
+        border: 1px solid black;
     }
     :focus {
         outline: none;
@@ -102,7 +102,7 @@
         };
     })();
     var scripts = [
-        { src: "https://s0.2mdn.net/ads/studio/cached_libs/createjs_2019.11.15_min.js" },
+        { src: "https://s0.2mdn.net/ads/studio/cached_libs/createjs_2015.11.26_54e1c3722102182bb133912ad4442e19_min.js" },
         { src: creativeName+".js" }
     ];
     load(scripts);
@@ -113,10 +113,10 @@
     <!-- <script src="https://s0.2mdn.net/ads/studio/cached_libs/createjs_2015.11.26_54e1c3722102182bb133912ad4442e19_min.js"> -->
     </script>
 <!--
-<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
  -->
 <!-- 
-<script src="index.js?1733843238944"></script>    
+<script src="index.js?1661967070597"></script>    
  -->
     <script> 
     var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
@@ -152,7 +152,7 @@ function handleComplete(evt,comp) {
         //Registers the "tick" event listener.
         fnStartAnimation = function() {
 		stage.addChild(exportRoot);
-		createjs.Ticker.framerate = lib.properties.fps;
+		createjs.Ticker.setFPS(lib.properties.fps);
 		createjs.Ticker.addEventListener("tick", stage);
 	}        
         //Code to support hidpi screens and responsive scaling.
@@ -179,7 +179,7 @@ function tick(evt){
 }
     </script>
 </head>
-<body onLoad="load(scripts);init();" style="margin:0px;" id="body">
+<body onLoad="load(scripts);init();" style="margin:0px;">
     <div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:320px; height:50px">
         <a href="javascript:window.open(window.clickTag)" style="overflow:hidden; width:320px; height:50px; position: absolute; left: 0px; top: 0px; padding: 0; margin: 0; border: 0; cursor: pointer;">
             <canvas id="canvas" width="320" height="50" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
@@ -190,8 +190,8 @@ function tick(evt){
         <script>
 		// EVENTOS //
 		// animation_container.addEventListener('click', salida);
-		body.addEventListener("mouseover", rollOver, false);
-		body.addEventListener("mouseout", rollOut, false);
+		animation_container.addEventListener("mouseover", rollOver, false);
+		animation_container.addEventListener("mouseout", rollOut, false);
 		// FUNCIONES //
 			function rollOver() { document.eventoRollOver(); }
 			function rollOut() { document.eventoRollOut(); }
