@@ -108,7 +108,7 @@
     load(scripts);
     </script>
     <script>
-    var clickTag = "https://www.google.com/"; 
+    var clickTag = "https://www.google.com"; 
     </script>
     <!-- <script src="https://s0.2mdn.net/ads/studio/cached_libs/createjs_2015.11.26_54e1c3722102182bb133912ad4442e19_min.js"> -->
     </script>
@@ -116,7 +116,7 @@
 <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
  -->
 <!-- 
-<script src="index.js?1758178650847"></script>    
+<script src="index.js?1773350060321"></script>    
  -->
     <script> 
     var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
@@ -125,7 +125,7 @@
         canvas = document.getElementById("canvas");
         anim_container = document.getElementById("animation_container");
         dom_overlay_container = document.getElementById("dom_overlay_container");
-	var comp=AdobeAn.getComposition("A4DAFDFBAF18B64E9CD2D6DEB02E1B51");
+	var comp=AdobeAn.getComposition("E7F8FFA30680744D9C644F57AD1AD8B3");
 	var lib=comp.getLibrary();
 	var loader = new createjs.LoadQueue(false);
 	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
@@ -180,7 +180,7 @@ function tick(evt){
 </head>
 <body onLoad="load(scripts);init();" style="margin:0px;" id="body">
     <div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:300px; height:600px">
-        <a href="javascript:window.open(window.clickTag)" style="overflow:hidden; width:300px; height:600px; position: absolute; left: 0px; top: 0px; padding: 0; margin: 0; border: 0; cursor: pointer;">
+        <a href="javascript:void(0);" onclick="window.open(clickTag)" style="overflow:hidden; width:300px; height:600px; position: absolute; left: 0px; top: 0px; padding: 0; margin: 0; border: 0; cursor: pointer;">
             <canvas id="canvas" width="300" height="600" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
             <div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:300px; height:600px; position: absolute; left: 0px; top: 0px; display: block;">
             </div>
