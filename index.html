@@ -228,7 +228,7 @@ iframe {
     </div>
   </div>
 
-  <nav id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-slate-800/90 backdrop-blur-sm border-t border-slate-700 shadow-xl">
+  <nav id="mobile-menu" class="opacity-0 pointer-events-none absolute top-full left-0 w-full bg-slate-800/90 backdrop-blur-sm border-t border-slate-700 shadow-xl transition-opacity duration-200 ease-in-out">
     <ul class="flex flex-col p-4 space-y-3 text-center text-sm font-medium tracking-wide">
       <li><a href="#" class="menu-link block py-2 hover:text-blue-400 transition-colors" data-target="group-0">300x250</a></li>
       <li><a href="#" class="menu-link block py-2 hover:text-blue-400 transition-colors" data-target="group-1">728x90</a></li>
@@ -411,26 +411,32 @@ const line3 = document.getElementById('line3');
 
 // Función única para cerrar el menú
 function closeMenu() {
-  if (!mobileMenu.classList.contains('hidden')) {
-    mobileMenu.classList.add('hidden');
-    // Revertir animación de la hamburguesa
+  if (!mobileMenu.classList.contains('opacity-0')) {
+    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+    
+    // Revertir icono hamburguesa
     line1.classList.remove('rotate-45', 'translate-x-1');
     line2.classList.remove('-translate-x-10', 'opacity-0');
     line3.classList.remove('-rotate-45', 'translate-x-1');
   }
 }
 
-// Toggle al hacer click en el botón
 menuBtn.addEventListener('click', () => {
-  const isHidden = mobileMenu.classList.toggle('hidden');
-  
-  // Animación de la hamburguesa a "X"
-  line1.classList.toggle('rotate-45', !isHidden);
-  line1.classList.toggle('translate-x-1', !isHidden);
-  line2.classList.toggle('-translate-x-10', !isHidden);
-  line2.classList.toggle('opacity-0', !isHidden);
-  line3.classList.toggle('-rotate-45', !isHidden);
-  line3.classList.toggle('translate-x-1', !isHidden);
+  const isOpening = mobileMenu.classList.contains('opacity-0');
+
+  if (isOpening) {
+    mobileMenu.classList.remove('opacity-0', 'pointer-events-none');
+  } else {
+    mobileMenu.classList.add('opacity-0', 'pointer-events-none');
+  }
+
+  // Animación del icono (X)
+  line1.classList.toggle('rotate-45', isOpening);
+  line1.classList.toggle('translate-x-1', isOpening);
+  line2.classList.toggle('-translate-x-10', isOpening);
+  line2.classList.toggle('opacity-0', isOpening);
+  line3.classList.toggle('-rotate-45', isOpening);
+  line3.classList.toggle('translate-x-1', isOpening);
 });
 
 // NUEVO: Cerrar menú al detectar scroll
