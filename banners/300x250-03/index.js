@@ -3528,8 +3528,8 @@ lib.properties = {
 	color: "#FFFFFF",
 	opacity: 1.00,
 	manifest: [
-		{src:"images/index_atlas_P_1.png?1780302572420", id:"index_atlas_P_1"},
-		{src:"images/index_atlas_NP_1.jpg?1780302572420", id:"index_atlas_NP_1"}
+		{src:"images/index_atlas_P_1.png?1784179532372", id:"index_atlas_P_1"},
+		{src:"images/index_atlas_NP_1.jpg?1784179532372", id:"index_atlas_NP_1"}
 	],
 	preloads: []
 };
