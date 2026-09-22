@@ -1134,6 +1134,144 @@ main::after{
   -webkit-backdrop-filter:none !important;
 }
 
+
+
+/* ===== V20 — tighter section spacing ===== */
+.category-header {
+  margin: 1.5rem auto 1.4rem !important;
+  padding-top: 12px !important;
+}
+
+#gallery-container > section:first-child .category-header {
+  margin-top: 0 !important;
+}
+
+@media(max-width:768px){
+  .category-header {
+    margin: 1.35rem 2px 1.25rem !important;
+    padding-top: 10px !important;
+  }
+  #gallery-container > section:first-child .category-header {
+    margin-top: 0 !important;
+  }
+}
+
+
+
+/* ===== V20 — filtered view: avoid unnecessary vertical scroll ===== */
+body.single-filter main {
+  min-height: calc(100vh - 66px - 48px) !important;
+  padding-bottom: 0 !important;
+}
+
+body.single-filter #gallery-container > section:not([style*="display: none"]) .category-header {
+  margin-top: .65rem !important;
+}
+
+body.single-filter #gallery-container > section:not([style*="display: none"]) {
+  margin-bottom: 0 !important;
+}
+
+@media(max-width:900px){
+  body.single-filter main {
+    min-height: calc(100vh - 96px - 48px) !important;
+  }
+}
+
+
+/* ===== V21 — stable header + 20px above section titles ===== */
+/* Reserve scrollbar width even when a filtered view does not need scrolling.
+   This prevents the centered header/filter bar from shifting horizontally. */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Keep exactly 20px of breathing room above every section title. */
+.category-header {
+  padding-top: 20px !important;
+}
+
+@media(max-width:768px){
+  .category-header {
+    padding-top: 20px !important;
+  }
+}
+
+/* ===== V22 — stable gallery position between filters ===== */
+/* Use the same top spacing for the visible section in every filter state,
+   so the banner grid does not jump up/down when switching filters. */
+body.single-filter #gallery-container > section:not([style*="display: none"]) .category-header {
+  margin-top: 20px !important;
+}
+
+/* In All work, give every section title a little more air above it. */
+body.all-filter .category-header {
+  margin-top: 20px !important;
+}
+
+body.all-filter #gallery-container > section:first-child .category-header {
+  margin-top: 20px !important;
+}
+
+@media(max-width:768px){
+  body.single-filter #gallery-container > section:not([style*="display: none"]) .category-header,
+  body.all-filter .category-header,
+  body.all-filter #gallery-container > section:first-child .category-header {
+    margin-top: 20px !important;
+  }
+}
+
+/* ===== V23 — no vertical jump when changing filters ===== */
+/* Prevent browser scroll anchoring from compensating when sections are hidden/shown. */
+#gallery-container,
+#gallery-container section {
+  overflow-anchor: none;
+}
+
+
+/* ===== V24 — uniform All Work section spacing ===== */
+/* Every section in All Work uses exactly the same 20px gap before the divider line,
+   including the first 300x250 section. */
+body.all-filter #gallery-container > section {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+body.all-filter #gallery-container > section .category-header,
+body.all-filter #gallery-container > section:first-child .category-header {
+  margin-top: 20px !important;
+}
+
+@media(max-width:768px){
+  body.all-filter #gallery-container > section .category-header,
+  body.all-filter #gallery-container > section:first-child .category-header {
+    margin-top: 20px !important;
+  }
+}
+
+
+
+/* ===== V25 — more air between All Work sections, stable first section ===== */
+/* Keep the first 300x250 section exactly where it was, so switching to its
+   individual filter does not create a vertical jump. */
+body.all-filter #gallery-container > section:first-child .category-header {
+  margin-top: 20px !important;
+}
+
+/* Add extra space only before the divider of subsequent All Work sections. */
+body.all-filter #gallery-container > section:not(:first-child) .category-header {
+  margin-top: 36px !important;
+}
+
+@media(max-width:768px){
+  body.all-filter #gallery-container > section:first-child .category-header {
+    margin-top: 20px !important;
+  }
+  body.all-filter #gallery-container > section:not(:first-child) .category-header {
+    margin-top: 32px !important;
+  }
+}
+
 </style>
 </head>
 
@@ -1235,48 +1373,134 @@ function hideLoader(id) {
 
 function renderGallery() {
   const container = document.getElementById("gallery-container");
-  
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      const iframe = entry.target;
-      const loader = document.getElementById("loader-" + iframe.id);
 
-      if (entry.isIntersecting) {
-        // Solo cargamos si está en "about:blank"
-        if (iframe.src.includes("about:blank") || iframe.src === "") {
-          // Pequeño delay para no saturar el hilo principal al hacer scroll rápido
-          if (loader) loader.style.display = "flex";
-          iframe.src = iframe.dataset.src;
-        }
-      } else {
-        // Al salir, limpiamos. 
-        // TIP: Si el banner es muy pesado, podrias dejar pasar 1 o 2 segundos antes de limpiar
-        // para que si el usuario sube y baja rápido, no se reinicie la animación desde cero.
-        if (iframe.src !== "about:blank") {
-          iframe.src = "about:blank";
-          iframe.style.opacity = "0";
-          if (loader) {
-            loader.style.display = "flex";
-            loader.style.opacity = "1";
-          }
-        }
-      }
-    });
-  },
-  { 
-    // Aumentamos el margen superior e inferior para precargar los banners
-    // antes de que el usuario los vea.
-    rootMargin: "180px 0px 180px 0px", 
-    threshold: 0 
+  // ===== CARGA SECUENCIAL DE BANNERS =====
+  // Solo un iframe empieza a cargar por vez. Los banners que salen de la zona
+  // visible se vacían con about:blank para dejar de ejecutar su animación.
+  const loadQueue = [];
+  const queuedIframes = new Set();
+  let isLoadingBanner = false;
+
+  function isNearViewport(iframe) {
+    return iframe.dataset.inView === "1" && iframe.offsetParent !== null;
   }
-);
+
+  function removeFromQueue(iframe) {
+    queuedIframes.delete(iframe);
+    const index = loadQueue.indexOf(iframe);
+    if (index !== -1) loadQueue.splice(index, 1);
+  }
+
+  function unloadBanner(iframe) {
+    if (!iframe) return;
+
+    removeFromQueue(iframe);
+
+    // Si estaba cargando, invalidamos esa carga. El onload de about:blank
+    // no va a ocultar el loader gracias a hideLoader().
+    if (iframe.dataset.loading === "1") {
+      iframe.dataset.loading = "0";
+      isLoadingBanner = false;
+    }
+
+    if (!iframe.src.includes("about:blank")) {
+      iframe.src = "about:blank";
+    }
+
+    iframe.style.opacity = "0";
+
+    const loader = document.getElementById("loader-" + iframe.id);
+    if (loader) {
+      loader.style.display = "flex";
+      loader.style.opacity = "1";
+    }
+
+    processLoadQueue();
+  }
+
+  function enqueueBanner(iframe) {
+    if (!iframe || !isNearViewport(iframe)) return;
+    if (iframe.dataset.loading === "1") return;
+    if (!iframe.src.includes("about:blank") && iframe.src !== "") return;
+    if (queuedIframes.has(iframe)) return;
+
+    queuedIframes.add(iframe);
+    loadQueue.push(iframe);
+    processLoadQueue();
+  }
+
+  function processLoadQueue() {
+    if (isLoadingBanner) return;
+
+    while (loadQueue.length) {
+      const iframe = loadQueue.shift();
+      queuedIframes.delete(iframe);
+
+      // Puede haber salido de pantalla mientras esperaba su turno.
+      if (!isNearViewport(iframe)) continue;
+      if (iframe.dataset.loading === "1") continue;
+      if (!iframe.src.includes("about:blank") && iframe.src !== "") continue;
+
+      const loader = document.getElementById("loader-" + iframe.id);
+      if (loader) {
+        loader.style.display = "flex";
+        loader.style.opacity = "1";
+      }
+
+      isLoadingBanner = true;
+      iframe.dataset.loading = "1";
+      iframe.src = iframe.dataset.src;
+      break;
+    }
+  }
+
+  function bannerFinishedLoading(iframe) {
+    // Solo libera la cola si este onload corresponde a una carga real.
+    if (iframe.dataset.loading !== "1") return;
+
+    iframe.dataset.loading = "0";
+    isLoadingBanner = false;
+
+    // Pequeña separación para que los banners no arranquen todos juntos.
+    setTimeout(processLoadQueue, 120);
+  }
+
+  // Hacemos accesible esta función al onload inline de cada iframe.
+  window.bannerFinishedLoading = bannerFinishedLoading;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      // IntersectionObserver no garantiza que entries venga en el mismo orden
+      // visual. Los ordenamos de arriba hacia abajo y de izquierda a derecha.
+      entries.sort((a, b) => {
+        const ar = a.boundingClientRect;
+        const br = b.boundingClientRect;
+        return (ar.top - br.top) || (ar.left - br.left);
+      });
+
+      entries.forEach((entry) => {
+        const iframe = entry.target;
+
+        if (entry.isIntersecting) {
+          iframe.dataset.inView = "1";
+          enqueueBanner(iframe);
+        } else {
+          iframe.dataset.inView = "0";
+          unloadBanner(iframe);
+        }
+      });
+    },
+    {
+      // Precarga apenas antes de que el banner entre en pantalla.
+      // Menor que los 180px anteriores para reducir CPU y memoria.
+      rootMargin: "100px 0px 100px 0px",
+      threshold: 0
+    }
+  );
 
   bannerGroups.forEach((group, gi) => {
-    // ... (Tu creación de secciones permanece igual)
-const section = document.createElement("section");
-    // Añadimos ID a la sección para el scroll
-    section.id = `section-group-${gi}`; 
+    const section = document.createElement("section");
+    section.id = `section-group-${gi}`;
     section.innerHTML = `
       <div class="category-header">
         <div class="category-line"></div>
@@ -1308,6 +1532,8 @@ const section = document.createElement("section");
         <iframe
           id="${id}"
           data-src="${banner.ruta}"
+          data-in-view="0"
+          data-loading="0"
           src="about:blank"
           width="${banner.ancho}"
           height="${banner.alto}"
@@ -1315,7 +1541,7 @@ const section = document.createElement("section");
           frameborder="0"
           scrolling="no"
           sandbox="allow-scripts allow-same-origin"
-          onload="hideLoader('${id}'); disableBannerClicks(this);">
+          onload="hideLoader('${id}'); bannerFinishedLoading(this); disableBannerClicks(this);">
         </iframe>
       `;
 
@@ -1343,8 +1569,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const section = document.getElementById(`section-group-${i}`);
         if (section) section.style.display = (filter === "all" || filter === String(i)) ? "block" : "none";
       });
-      const target = filter === "all" ? document.getElementById("gallery-container") : document.getElementById(`section-group-${filter}`);
-      if (target) window.scrollTo({top: target.getBoundingClientRect().top + window.pageYOffset - 90, behavior:"smooth"});
+      // Do not change the scroll position when switching filters.
+      // The selected section simply appears in place without forcing the page up/down.
     });
   });
 });
