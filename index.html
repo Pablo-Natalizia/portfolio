@@ -1091,6 +1091,49 @@ body::after{
   transform:none !important;
 }
 
+
+/* ===== V19 — performance mode ===== */
+
+/* Static full-width background: no animated layers, filters or compositing */
+body{
+  background:
+    radial-gradient(circle at 18% 12%, rgba(37,99,235,.11), transparent 34rem),
+    linear-gradient(180deg,#101827 0%,#09111f 55%,#0d1626 100%) !important;
+  background-attachment:scroll !important;
+}
+
+body::before,
+body::after,
+main::before,
+main::after{
+  content:none !important;
+  display:none !important;
+  animation:none !important;
+}
+
+/* Avoid expensive blur/compositing around the gallery */
+.reload-btn{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+.banner-wrapper{
+  will-change:auto !important;
+  contain:layout paint;
+}
+
+/* Keep hover feedback cheap */
+.banner-wrapper,
+.banner-wrapper:hover{
+  transition:box-shadow .18s ease !important;
+}
+
+/* Loader is simple and GPU-light */
+.loader-container{
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
 </style>
 </head>
 
@@ -1203,10 +1246,8 @@ const observer = new IntersectionObserver(
         // Solo cargamos si está en "about:blank"
         if (iframe.src.includes("about:blank") || iframe.src === "") {
           // Pequeño delay para no saturar el hilo principal al hacer scroll rápido
-          setTimeout(() => {
-            if (loader) loader.style.display = "flex";
-            iframe.src = iframe.dataset.src;
-          }, 150); 
+          if (loader) loader.style.display = "flex";
+          iframe.src = iframe.dataset.src;
         }
       } else {
         // Al salir, limpiamos. 
@@ -1226,7 +1267,7 @@ const observer = new IntersectionObserver(
   { 
     // Aumentamos el margen superior e inferior para precargar los banners
     // antes de que el usuario los vea.
-    rootMargin: "500px 0px 500px 0px", 
+    rootMargin: "180px 0px 180px 0px", 
     threshold: 0 
   }
 );
