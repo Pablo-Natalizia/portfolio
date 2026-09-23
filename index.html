@@ -1272,6 +1272,31 @@ body.all-filter #gallery-container > section:not(:first-child) .category-header 
   }
 }
 
+/* ===== V26 — MOBILE: reduce gap below sticky header ===== */
+@media(max-width:768px){
+  main.container{
+    padding-top:0 !important;
+  }
+
+  body.all-filter #gallery-container > section:first-child .category-header,
+  body.single-filter #gallery-container > section:not([style*="display: none"]) .category-header{
+    margin-top:6px !important;
+  }
+}
+
+
+/* ===== V27 — footer clearance ===== */
+/* Extra scroll room so the fixed Upwork footer never covers the last banners. */
+#gallery-container {
+  padding-bottom: 72px !important;
+}
+
+@media(max-width:768px){
+  #gallery-container {
+    padding-bottom: 82px !important;
+  }
+}
+
 </style>
 </head>
 
