@@ -1297,6 +1297,65 @@ body.all-filter #gallery-container > section:not(:first-child) .category-header 
   }
 }
 
+
+/* ===== V28 — distinctive personal brand header ===== */
+header {
+  background:#06080c !important;
+  border-bottom:1px solid #263b59;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+header::after {
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px;
+  background:linear-gradient(90deg,transparent,#60a5fa 22%,#2563eb 48%,transparent 82%);
+  pointer-events:none;
+}
+.brand-bar {
+  min-height:76px; flex-direction:row; justify-content:space-between;
+  gap:32px; padding:9px 24px; box-sizing:border-box;
+}
+.brand-lockup { gap:13px; flex-shrink:0; align-self:auto; }
+.brand-copy { padding-left:14px; }
+.brand-copy::before {
+  display:block; content:""; position:absolute; left:0; top:1px; bottom:1px; width:3px;
+  background:linear-gradient(180deg,#60a5fa,#2563eb);
+}
+.brand-name {
+  margin:0; color:#f8fbff; font-size:25px; font-weight:800;
+  letter-spacing:-.045em; line-height:1.1;
+}
+.brand-role {
+  margin:7px 0 0; font-size:9px; color:#a8bad3;
+  font-weight:650; letter-spacing:.13em; line-height:1.35;
+}
+#portfolio-filters {
+  position:static !important; transform:none; flex:0 1 auto;
+  width:max-content; max-width:100%; flex-wrap:nowrap; gap:3px;
+  padding:4px; background:rgba(255,255,255,.035);
+  backdrop-filter:none; -webkit-backdrop-filter:none;
+}
+.filter-chip { font-size:10px; padding:9px 12px; }
+.filter-chip:focus-visible { outline:2px solid #93c5fd; outline-offset:2px; }
+body.single-filter main { min-height:calc(100vh - 76px - 48px) !important; }
+@media(max-width:900px) {
+  .brand-bar {
+    min-height:120px; flex-direction:column; align-items:flex-start;
+    gap:14px; padding:11px 18px 7px;
+  }
+  #portfolio-filters {
+    width:100%; max-width:100%; justify-content:flex-start;
+    overflow-x:auto; overflow-y:hidden; box-sizing:border-box;
+  }
+  .filter-chip { flex:0 0 auto; padding:8px 12px; }
+  section { scroll-margin-top:138px; }
+  body.single-filter main { min-height:calc(100vh - 120px - 48px) !important; }
+}
+@media(max-width:480px) {
+  .brand-bar { padding-left:16px; padding-right:16px; }
+  .brand-name { font-size:24px; }
+  .brand-role { font-size:8px; letter-spacing:.12em; }
+}
+
 </style>
 </head>
 
