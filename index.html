@@ -1343,10 +1343,19 @@ body.single-filter main { min-height:calc(100vh - 76px - 48px) !important; }
     gap:14px; padding:11px 18px 7px;
   }
   #portfolio-filters {
-    width:100%; max-width:100%; justify-content:flex-start;
-    overflow-x:auto; overflow-y:hidden; box-sizing:border-box;
+    display:grid;
+    grid-template-columns:repeat(6, minmax(0, 1fr));
+    width:100%; max-width:100%; min-width:0;
+    box-sizing:border-box;
+    overflow:visible;
   }
-  .filter-chip { flex:0 0 auto; padding:8px 12px; }
+  #portfolio-filters .filter-chip {
+    min-width:0;
+    padding:8px 2px;
+    font-size:clamp(8px, 2.3vw, 10px);
+    letter-spacing:0;
+    text-align:center;
+  }
   section { scroll-margin-top:138px; }
   body.single-filter main { min-height:calc(100vh - 120px - 48px) !important; }
 }
