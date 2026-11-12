@@ -3,17 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pablo Natalizia Portfolio</title>
+  <title>HTML5 Banner Ads Developer &amp; Motion Designer | Pablo Natalizia</title>
     
  
 
   <!-- SEO -->
     
  
-  <meta name="description" content="HTML5 Display Ads Developer specializing in Google Web Designer & Adobe Animate.">
+  <meta name="description" content="Explore animated HTML5 banner ads, Google Ads display creatives, motion graphics and responsive HTML emails by freelance developer Pablo Natalizia.">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Pablo Natalizia">
   <meta name="google-site-verification" content="WJvKwDH9O4OLRC82LrH0aVZybSDces2nWuCxtVF-6V8" />
+
+  <link rel="canonical" href="https://pablo-natalizia.github.io/portfolio/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="HTML5 Banner Ads Developer &amp; Motion Designer | Pablo Natalizia" />
+  <meta property="og:description" content="Animated HTML5 display ads, motion graphics, banner resizing and responsive HTML email development." />
+  <meta property="og:url" content="https://pablo-natalizia.github.io/portfolio/" />
+  <meta name="twitter:card" content="summary" />
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3Z4GKPGE4J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3Z4GKPGE4J');
+  </script>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -21,7 +37,9 @@
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Pablo Natalizia",
-    "jobTitle": "HTML5 Display Ads Developer",
+    "jobTitle": "HTML5 Banner Ads Developer and Motion Designer",
+    "description": "Freelance developer creating animated HTML5 display banners, motion graphics, banner resizes and responsive HTML email templates.",
+    "knowsAbout": ["HTML5 banner ads", "Google Ads display creatives", "Adobe Animate", "Google Web Designer", "Motion graphics", "Responsive HTML email development"],
     "url": "https://pablo-natalizia.github.io/portfolio/",
     "sameAs": [
       "https://www.upwork.com/freelancers/pablonatalizia",
@@ -1370,13 +1388,7 @@ body.single-filter main { min-height:calc(100vh - 76px - 48px) !important; }
 
 <body class="bg-gray-50">
     
-    <!-- SEO INVISIBLE -->
-<section style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">
-  HTML5 Display Ads Developer portfolio. Google Web Designer and Adobe Animate specialist.
-  HTML5 banner ads for display and programmatic advertising.
-  Freelance developer available on Upwork and Fiverr.
-</section>
-
+  
 <header class="sticky top-0 z-[100]">
   <div class="brand-bar">
     <div class="brand-lockup">
@@ -1408,7 +1420,7 @@ body.single-filter main { min-height:calc(100vh - 76px - 48px) !important; }
 
     <footer class="py-3 shadow-[0_-8px_20px_rgba(0,0,0,0.05)]">
         <div class="container mx-auto px-6 flex justify-center items-center">
-            <a href="https://www.upwork.com/freelancers/pablonatalizia" target="_blank" class="flex items-center gap-2 text-slate-700 hover:text-green-600 transition-colors duration-200 group">
+            <a href="https://www.upwork.com/freelancers/pablonatalizia" target="_blank" rel="noopener noreferrer" onclick="if (typeof gtag === 'function') gtag('event', 'upwork_contact_click', {link_url: this.href});" class="flex items-center gap-2 text-slate-700 hover:text-green-600 transition-colors duration-200 group">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
                 <span class="text-xs font-semibold tracking-wide">Contact me via Upwork</span>
             </a>
@@ -1594,6 +1606,7 @@ function renderGallery() {
   bannerGroups.forEach((group, gi) => {
     const section = document.createElement("section");
     section.id = `section-group-${gi}`;
+    section.setAttribute("aria-label", group.nombre);
     section.innerHTML = `
       <div class="category-header">
         <div class="category-line"></div>
@@ -1624,6 +1637,7 @@ function renderGallery() {
         </button>
         <iframe
           id="${id}"
+          title="Animated HTML5 ${banner.ancho}x${banner.alto} display banner example ${bi+1}"
           data-src="${banner.ruta}"
           data-in-view="0"
           data-loading="0"
