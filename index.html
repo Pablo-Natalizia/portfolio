@@ -1621,6 +1621,15 @@ function renderGallery() {
 
     group.banners.forEach((banner, bi) => {
       const id = `iframe-${gi}-${bi}`;
+      // Descripciones accesibles según el formato real; sin inventar marcas o campañas.
+      const formatDescriptions = [
+        "Animated HTML5 medium rectangle display ad",
+        "Animated HTML5 leaderboard display ad",
+        "Animated HTML5 half-page display ad",
+        "Animated HTML5 wide skyscraper display ad",
+        "Animated HTML5 mobile display ad"
+      ];
+      const bannerDescription = `${formatDescriptions[gi]} (${banner.ancho}x${banner.alto}), portfolio example ${bi + 1}`;
       const wrapper = document.createElement("div");
       wrapper.className = "banner-wrapper";
       wrapper.style.width = banner.ancho + "px";
@@ -1630,14 +1639,14 @@ function renderGallery() {
         <div id="loader-${id}" class="loader-container" style="transition: opacity 0.3s ease;">
           <span class="loader"></span>
         </div>
-        <button class="reload-btn" onclick="reloadBanner('${id}')">
+        <button class="reload-btn" type="button" aria-label="Replay ${bannerDescription}" title="Replay animation" onclick="reloadBanner('${id}')">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
           </svg>
         </button>
         <iframe
           id="${id}"
-          title="Animated HTML5 ${banner.ancho}x${banner.alto} display banner example ${bi+1}"
+          title="${bannerDescription}"
           data-src="${banner.ruta}"
           data-in-view="0"
           data-loading="0"
