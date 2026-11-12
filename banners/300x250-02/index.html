@@ -1,1 +1,307 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Cube Banner Ad By adxbird</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta name="ad.size" content="width=300,height=250" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .adx_wrapper {
+            animation: scaleIn 0.6s ease-out forwards;
+        }
+
+        @media (max-width: 299px) {
+            body {
+                overflow: hidden;
+                transform: scale(.9, .9);
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                transform-origin: top left;
+            }
+        }
+
+
+        @media (max-width: 250px) {
+            body {
+                overflow: hidden;
+                transform: scale(.79, .79);
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                transform-origin: top left;
+            }
+        }
+
+        /* --- Updated & Fixed Logo Styles --- */
+        .adx_logo_area {
+            background: #d0141433;
+            border-radius: 50%;          /* Perfect circle initially */
+            position: absolute;
+            bottom: 3px;
+            right: 3px;
+            height: 15px;
+            width: 15px;                 /* Starts as a 20px x 20px circle */
+            overflow: hidden;
+            
+            /* Pin the transition anchor to the right so it grows leftward */
+            transform-origin: right center; 
+            
+            /* Clean, fallback-safe CSS properties */
+            transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-radius 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 6000;
+        }
+
+        /* Hover State */
+        .adx_logo_area:hover {
+            width: 40px;                 /* Expands wide enough to show full text */
+            border-radius: 4px;          /* Becomes a clean rounded rectangle */
+        }
+
+        /* This inner container holds the image static so it never moves or squishes */
+        .adx_logo_window {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 65px;                 /* Matches the max expanded width */
+            height: 100%;
+        }
+
+        .adx_logo {
+            position: absolute;
+            top: 50%;
+            left: 3px;                   /* Keeps the "D" side perfectly locked here */
+            height: 75%;
+            width: auto;                 /* Prevents image distortion */
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+        
+    </style>    
+     <script>
+    
+    var clickTag = "https://waltonbd.com/digital-campaign-season-24";
+  </script>
+<script type="text/javascript">
+    
+  (function() {
+    var MAX_URL_PARAM_LENGTH = 34;
+    var CLICK_X_URL_KEY = 'nx';
+    var CLICK_Y_URL_KEY = 'ny';
+    var CREATIVE_DIMENSIONS_KEY = 'dim';
+    var AD_URL_PARAM = '&adurl=';
+
+    var relegateNavigation = '';
+    var urlParamMap = {};
+
+    var isNewtonTokenSet = false;
+    var isTurtleXAdClick = false;
+    var reportingIds = {};
+
+    urlParamMap[CLICK_X_URL_KEY] = null;
+    urlParamMap[CLICK_Y_URL_KEY] = null;
+    urlParamMap[CREATIVE_DIMENSIONS_KEY] = null;
+
+    var handleClickTagMessage = function(e) {
+      try {
+        var eventData = JSON.parse(e.data);
+      } catch (err) {
+        return;
+      }
+      if (eventData.isInitClickTag) {
+        if (eventData.clickTags) {
+          for (var i = 0; i < eventData.clickTags.length; i++) {
+            var clkTag = eventData.clickTags[i];
+            window[clkTag.name] = clkTag.url;
+
+            if (clkTag.eTldPlusOne) {
+              eTldPlusOnes[clkTag.url] = clkTag.eTldPlusOne;
+            }
+            if (clkTag.reportingId) {
+              reportingIds[clkTag.url] = clkTag.reportingId;
+            }
+          }
+        } else if (eventData.clickTag) {
+          window.clickTag = eventData.clickTag;
+        }
+        relegateNavigation = eventData.relegateNavigation;
+      }
+      if (isNewtonEnabled(eventData) && !isNewtonTokenSet) {
+        var newtonOt2Token = eventData.newtonOt2Token;
+        enableAttributionReportingApi(newtonOt2Token);
+      }
+      if (eventData.isTurtleXAdClick) {
+        isTurtleXAdClick = true;
+      }
+    };
+
+    var isNewtonEnabled = function(eventData) {
+      return 'newtonOt2Token' in eventData;
+    }
+
+    var enableAttributionReportingApi = function(originTrialToken) {
+      if (/Chrome/.test(window.navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.httpEquiv = 'origin-trial';
+        meta.content = String(originTrialToken);
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        isNewtonTokenSet = true;
+      }
+    };
+
+    var storeClickCoordinates = function(e) {
+      urlParamMap[CLICK_X_URL_KEY] = Math.round(e.clientX);
+      urlParamMap[CLICK_Y_URL_KEY] = Math.round(e.clientY);
+    };
+
+    var getCreativeDimensions = function() {
+      return window.innerWidth + 'x' + window.innerHeight;
+    }
+
+    var getExitClickParams = function(e) {
+      urlParamMap[CREATIVE_DIMENSIONS_KEY] = getCreativeDimensions();
+
+      var exitParams = '';
+      for (var key in urlParamMap) {
+        exitParams += '&' + key + '=';
+        if (urlParamMap[key] !== null) {
+          exitParams += urlParamMap[key];
+        }
+      }
+      return exitParams;
+    }
+
+    var appendExitClickParams = function(url) {
+      var adUrlIndex = url.toLowerCase().indexOf(AD_URL_PARAM);
+      var paramsToBeAdded = getExitClickParams();
+      if (adUrlIndex > -1 && paramsToBeAdded.length <= MAX_URL_PARAM_LENGTH) {
+        url = url.substr(0, adUrlIndex) + paramsToBeAdded +
+          url.substr(adUrlIndex);
+      };
+      return url;
+    };
+
+    if (open.call) {
+      window.open = function(open) {
+        return function(url, name, features) {
+          if (isTurtleXAdClick && !!reportingIds[url]) {
+            var message = {
+              'reportingId': reportingIds[url],
+              'clickX': urlParamMap[CLICK_X_URL_KEY],
+              'clickY': urlParamMap[CLICK_Y_URL_KEY],
+              'creativeDims': getCreativeDimensions()
+              };
+            parent.postMessage(JSON.stringify(message), '*');
+          }
+          url = appendExitClickParams(url);
+          if (relegateNavigation === 'parent') {
+            var message = {'clickTag': url, 'isPostClickTag': true};
+            parent.postMessage(JSON.stringify(message), '*');
+          } else {
+            var args = [url, name];
+            var windowFeatures = '';
+
+            if (features) {
+              windowFeatures = windowFeatures.concat(features);
+            }
+            if (isNewtonTokenSet &&
+                !!document.featurePolicy?.allowedFeatures().includes(
+                  'attribution-reporting')) {
+              if (features) {
+                if (!features.includes('attributionsrc')) {
+                  windowFeatures = windowFeatures.concat(features, ', attributionsrc');
+                }
+              } else {
+                windowFeatures = windowFeatures.concat('attributionsrc');
+              }
+            }
+
+            if (windowFeatures) {
+              args.push(windowFeatures);
+            }
+            open.apply(window,args);
+          }
+        };
+      }(window.open);
+    }
+
+    if (window.addEventListener) {
+      window.addEventListener(
+          'message', handleClickTagMessage, false);
+      window.addEventListener('mousedown', storeClickCoordinates, true);
+    } else {
+      window.attachEvent('onmessage', handleClickTagMessage);
+    }
+  })();
+    
+  </script></head>
+
+<body>
+    <div class="adx_wrapper">
+        <div id="adArea" class="rct" style="opacity: 0; visibility: hidden; margin: auto;left: 0;right: 0;width: 300px;height: 250px;">
+            <div id="curso" class="mouse ffx zIndex5000">
+                <img src="images/swipe.png" style="width: 60px; height: 60px;position: absolute;top: 100%;left: 50%;transform: translateX(-50%);">
+            </div>
+            <div class="wrap noEvents zIndex3000">
+                <div id="c1" class="cube">
+                    <div class="pic1 rct face ff2 "></div>
+                    <div class="pic4 rct face ff1"></div>
+                    <div class="pic3 rct face ff3"></div>
+                    <div class="pic2 rct face ff4"></div>
+
+                </div>
+            </div>
+            <div class="wrap noEvents zIndex2400">
+                <div id="c2" class="cube">
+                    <div id="shadow" class="rct face f7 noVis"></div>
+                </div>
+
+            </div>
+            <div id="dragArea" class="rct zIndex5000"></div>
+        </div>
+        
+  
+    </div>
+    <script type="text/javascript" src="TweenMax.min.js"></script>
+    <script type="text/javascript" src="Draggable.min.js"></script>
+    <script>
+
+        function ctaFunction() {
+            window.open(clickTag, "_blank");
+        }
+        var assets_url = "images/";
+        var assets = {
+            init: [{
+                format: "png",
+                type: "class",
+                scale: 1,
+                names: "pic1 pic2 pic3 pic4"
+            },
+            {
+                format: "png",
+                type: "id",
+                scale: 1,
+                names: "shadow"
+            },],
+        };
+    </script>
+    <script src="code.min.js"></script>
+
+</body>
+
+</html>

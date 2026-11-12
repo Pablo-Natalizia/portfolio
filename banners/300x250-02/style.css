@@ -1,0 +1,406 @@
+body {
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+}
+html{
+	cursor: pointer;
+}
+
+#adArea {
+	overflow: hidden;
+	text-overflow: clip;
+	cursor: pointer;
+	position: absolute;
+	top: 0%;
+	left: 0%;
+	/* transform: translateY(-50%); */
+}
+
+.wrap {
+	-webkit-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	position: absolute;
+	-webkit-perspective: 600px;
+	-ms-perspective: 600px;
+	perspective: 600px;
+	perspective-origin: 50% 50%;
+	-webkit-perspective-origin: 50% 50%;
+	-ms-perspective-origin: 50% 50%
+}
+
+.cube {
+	position: relative;
+	width: 300px;
+	height: 250px;
+	-webkit-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	transform-origin: 50% 50%;
+	-webkit-perspective-origin: 50% 50%;
+	-ms-perspective-origin: 50% 50%;
+	transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+	-webkit-transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+	-ms-transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg)
+}
+.cube .rct{position: absolute;width: 300px;height: 250px;}
+
+.f00 {
+	transform: rotateY(-90deg);
+	-webkit-transform: rotateY(-90deg);
+	-ms-transform: rotateY(-90deg)
+}
+
+.f1 {
+	transform: rotateY(-90deg) translateX(-151px);
+	-webkit-transform: rotateY(-90deg) translateX(-151px);
+	-ms-transform: rotateY(-90deg) translateX(-151px);
+	transform-origin: center left;
+	-webkit-transform-origin: center left;
+	-ms-transform-origin: center left
+}
+
+.f2 {
+	transform: translateZ(151px);
+	-webkit-transform: translateZ(151px);
+	-ms-transform: translateZ(151px)
+}
+
+.f3 {
+	transform: rotateY(90deg) translateX(151px);
+	-webkit-transform: rotateY(90deg) translateX(151px);
+	-ms-transform: rotateY(90deg) translateX(151px);
+	transform-origin: center right;
+	-webkit-transform-origin: center right;
+	-ms-transform-origin: center right
+}
+
+.f4 {
+	transform: translateZ(-151px) rotateY(180deg);
+	-webkit-transform: translateZ(-151px) rotateY(180deg);
+	-ms-transform: translateZ(-151px) rotateY(180deg)
+}
+
+.f5 {
+	transform: rotateX(90deg) translateZ(-100px);
+	-webkit-transform: rotateX(90deg) translateZ(-100px);
+	-ms-transform: rotateX(90deg) translateZ(-100px)
+}
+
+.f6 {
+	transform: rotateX(90deg) translateZ(150px);
+	-webkit-transform: rotateX(90deg) translateZ(150px);
+	-ms-transform: rotateX(90deg) translateZ(150px)
+}
+
+.f7 {
+	transform: rotateX(90deg) translateZ(-60px);
+	-webkit-transform: rotateX(90deg) translateZ(-60px);
+	-ms-transform: rotateX(90deg) translateZ(-60px)
+}
+
+.ff1 {
+	transform: rotateY(-90deg) translateX(-150px);
+	-webkit-transform: rotateY(-90deg) translateX(-150px);
+	-ms-transform: rotateY(-90deg) translateX(-150px);
+	transform-origin: center left;
+	-webkit-transform-origin: center left;
+	-ms-transform-origin: center left
+}
+
+.ff2 {
+	transform: translateZ(150px);
+	-webkit-transform: translateZ(150px);
+	-ms-transform: translateZ(150px)
+}
+.ffx {
+	transform: translateZ(180px);
+	-webkit-transform: translateZ(180px);
+	-ms-transform: translateZ(180px);
+
+
+	/* transition: transform 0.5s ease; */
+}
+
+.ff3 {
+	transform: rotateY(90deg) translateX(150px) translateZ(0px);
+	-webkit-transform: rotateY(90deg) translateX(150px) translateZ(0px);
+	-ms-transform: rotateY(90deg) translateX(150px) translateZ(0px);
+	transform-origin: center right;
+	-webkit-transform-origin: center right;
+	-ms-transform-origin: center right
+}
+
+.ff4 {
+	transform: translateZ(-150px) rotateY(180deg);
+	-webkit-transform: translateZ(-150px) rotateY(180deg);
+	-ms-transform: translateZ(-150px) rotateY(180deg)
+}
+
+.face {
+	-webkit-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	-webkit-perspective: 800px;
+	-ms-perspective: 800px;
+	perspective: 800px;
+	perspective-origin: 50% 100px;
+	-webkit-perspective-origin: 50% 100px;
+	-ms-perspective-origin: 50% 100px
+}
+
+#dragArea {
+	opacity: .0
+}
+
+.dragEl {
+	position: absolute;
+	width: 86px;
+	height: 86px
+}
+
+.rct {
+	width: 300px;
+	height: 250px;
+	position: absolute
+}
+
+.scale0 {
+	-ms-transform: scale(0);
+	-webkit-transform: scale(0);
+	transform: scale(0)
+}
+
+.opacity0 {
+	opacity: 0
+}
+
+.opacity1 {
+	opacity: 1
+}
+.mouse{
+	right: 160px;position: absolute;height: 20px;width: 20px;bottom: 60px;
+	animation:  move-right-back-left 12s linear infinite;
+	opacity: 0;
+	/* transform: translateZ(180px) translateX(0); */
+}
+
+.zIndex2400 {
+	z-index: 2400!important
+}
+
+.zIndex2600 {
+	z-index: 2600!important
+}
+
+.zIndex3000 {
+	z-index: 3000!important
+}
+
+.zIndex4000 {
+	z-index: 4000!important
+}
+
+.zIndex5000 {
+	z-index: 5000!important
+}
+
+.zIndex5000 {
+	z-index: 5000!important
+}
+
+.posAbs {
+	position: absolute
+}
+
+.noVis {
+	visibility: hidden
+}
+
+.noEvents {
+	pointer-events: none
+}
+
+.noDisplay {
+	display: none
+}
+#box{
+    width: 300px;
+    height: 250px;
+	/* background-image: url('./images/product.png'); */
+	animation: circleAround 2s linear infinite;
+	background-repeat: no-repeat;
+	background-size: 300px 250px;
+	z-index: 9999;
+	position: absolute;
+	transform:  perspective(500px) translateZ(200px);
+}
+/* #box{
+	animation: circleAround 2s linear infinite;
+} */
+
+#second {
+	/* animation: circleAround 2s linear infinite; */
+}
+
+@keyframes circleAround {
+from { transform: rotate(0deg) translateX(15px) translateZ(160px) rotate(0deg); }
+to   { transform: rotate(360deg) translateX(15px) translateZ(160px) rotate(-360deg); }
+}
+@keyframes move-right-back-left {
+	0% {
+	
+		transform: translateZ(160px) translateX(0px);
+	  }
+	  25% {
+	
+		transform: translateZ(160px) translateX(80px);
+	  }
+	  /* 50% {
+		transform: translateZ(160px) translateX(0px);
+	  } */
+	  75% {
+
+		transform: translateZ(160px) translateX(-80px);
+	  }
+	  100% {
+	
+		transform: translateZ(160px) translateX(0px);
+	  }
+  }
+  /* @keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+	   opacity: 1;
+	}
+  } */
+
+
+  .adx_wrapper{
+	height: 250px;
+	width: 300px;
+	position: relative;
+	/* background-image: url('images/bg.png'); */
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+  }
+
+  
+.adx_brand_logo {
+    width: 30px;
+    height: auto;
+    top: 9px;
+    right: 7px;
+    position: absolute;
+}
+.adx_text_1 {
+        width: 76px;
+    height: auto;
+    top: -1px;
+    left: 7px;
+    position: absolute;
+}
+.adx_shape_1 {
+    width: 119px;
+    height: auto;
+    top: 33px;
+    left: 95px;
+    position: absolute;
+   
+}
+.adx_shape_text_1 {
+    width: 111px;
+    height: auto;
+    top: 41px;
+    left: 101px;
+    position: absolute;
+}
+.adx_shape_text_1_1 {
+    width: 17px;
+    height: auto;
+    top: 46px;
+    left: 215px;
+    position: absolute;
+}
+.adx_shape_2 {
+    width: 156px;
+    height: auto;
+    top: 64px;
+    left: 70px;
+    position: absolute;
+   
+}
+.adx_shape_text_2 {
+    width: 151px;
+    height: auto;
+    top: 78px;
+    left: 69px;
+    position: absolute;
+}
+
+/* ================================================================
+   CORRECCIÓN DE UNIÓN 3D (NOV 2026)
+   No se altera el JS, la rotación, los eventos de arrastre ni la
+   perspectiva. Chrome puede dejar una rendija por antialiasing al
+   unir planos 3D. Se rellena con un borde extra de la imagen real.
+
+   IMPORTANTE: el cargador coloca background-image directamente en
+   cada .face; el pseudo-elemento hereda esa misma imagen. No hace
+   falta editar este CSS al sustituir images/pic1.png ... pic4.png.
+   ================================================================ */
+.cube > .face {
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+}
+
+/* Extiende solo el borde derecho de cada imagen hacia la siguiente
+   cara, sin agrandar/deformar el contenido central de 300x250. */
+.cube > .face::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    right: -2px;
+    width: 3px;
+    height: 100%;
+    background-image: inherit;
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: 300px 250px;
+    pointer-events: none;
+}
+
+/* Evita que el borde extendido de pic4 sobresalga sobre pic1.
+   Conservamos la correccion antialiasing en las otras uniones. */
+.cube > .face.pic4::after { display: none; }
+
+/* La cara frontal sigue visible, pero su dorso no se dibuja.
+   Las copias traseras permiten ver los cuatro lados en la intro y
+   se desvanecen al terminar sin afectar el arrastre manual. */
+#c1 > .face:not(.intro-rear-face) {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+#c1 > .intro-rear-face {
+  pointer-events: none;
+  background: transparent !important;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+#c1 > .intro-rear-face::after { display: none !important; }
+#c1 > .intro-rear-face .intro-rear-panel {
+  position: absolute;
+  left: 0; top: 0;
+  width: 300px; height: 250px;
+  background-size: 300px 250px;
+  background-repeat: no-repeat;
+  transform: rotateY(180deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
